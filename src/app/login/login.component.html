@@ -1,3 +1,43 @@
-<input type="text" name="loginId" placeholder="Login Id" />
-<input type="password" name="password" placeholder="Password" />
-<button type="button" (click)="onLogin()">Login</button>
+<section class="login">
+    <div class="header"></div>
+    <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-2 form-wrapper clearfix">
+
+        <div class="col-lg-12 section-heading">
+            <img src="../../assets/images/logo.png" alt="">
+            <!-- <p>Welcome to TradeKings</p> -->
+        </div>
+
+        <div class="col-lg-12 input-wrapper clearfix">
+                <label for="userName">Username</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                    </div>
+                    <input id="userName" name="loginId" type="text" class="form-control" aria-label="Username" aria-describedby="Username">
+                </div>
+            </div>
+            <div class="col-lg-12 input-wrapper clearfix">
+                <label for="password">Password</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                    </div>
+                    <input id="password" name="password" [type]="showPassword ? 'text' : 'password'" class="form-control" aria-label="Password" aria-describedby="Password">
+                    <!-- <div class="input-group-append" (click)="togglePasswordView()">
+                        <span class="input-group-text" *ngIf="showPassword">
+                            <i class="fa fa-eye" ></i>
+                        </span>
+                        <span class="input-group-text" *ngIf="!showPassword">
+                            <i class="fa fa-eye-slash"></i>
+                        </span>
+                    </div> -->
+                </div>
+          </div>
+          <div class="col-lg-12 input-wrapper center-item-wrapper clearfix">
+              <button class="btn login-btn hover-shadow" (click)="onLogin()">LOGIN</button>
+          </div>
+      </div>
+</section>
+
+<!-- <input type="text" name="loginId" placeholder="Login Id" />
+<input type="password" name="password" placeholder="Password" /> -->

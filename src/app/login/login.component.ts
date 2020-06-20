@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  showPassword = false;
   constructor(
     private router: Router
   ) { }
@@ -17,6 +17,10 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.router.navigateByUrl('/home');
+  }
+
+  togglePasswordView() {
+    this.showPassword = !this.showPassword;
   }
 
 }

@@ -1,0 +1,57 @@
+@import '../../styles.scss';
+
+.login{
+    background: #FFFFFF;
+    height: 100vh;
+    .section-heading{
+        padding: 0 10px;
+        p{
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+        img{
+            width: 180px;
+            margin: auto calc(50% - 90px) 30px;
+        }
+    }
+    .form-wrapper{
+        box-shadow: var(--shadow-300);
+        // background: var(--light-bg);
+        padding: 3em 2em;
+        position: absolute;
+        top: 0;
+        // height: 50vh;
+        margin-top: 20vh;
+        border-radius: 10px;
+
+        .form-heading{
+            font-size: 1.5em;
+            padding: 10px;
+            color: var(--primary-text-dark-500-color);
+        }
+
+        .input-wrapper{
+            width: 100%;
+            float: left;
+            color: var(--primary-text-color);
+            padding: 10px;
+            img{
+                width: 50%;
+                padding: 44px;
+                margin: auto 25%;
+            }
+        }
+        .login-btn{
+            background: var(--primary-color);
+            box-shadow: 0 5px 6px rgba(0, 0, 0, 0.1);
+            color: var(--primary-text-color);
+            border: 0;
+            border-radius: 4px;
+            width: 50%;
+            margin: 20px auto 0;
+            padding: 10px;
+        }
+    }
+}

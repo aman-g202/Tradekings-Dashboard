@@ -1,1 +1,403 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/scss/bootstrap";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+:root{
+    // Colors 
+    --primary-color: #3B97FF;
+    --light-bg: #F7FAFC;
+    --primary-active-color: rgba(4, 22, 139, 0.3);
+    --primary-color-rgb: rgb(0, 176, 116);
+    --primary-hover-color: rgba(4, 22, 139, 0.1);
+    --primary-dark-hover-color: #222D5E;
+    --secondary-color: #234AD3;
+    --success-color: #699468;
+    --danger-color: #fc1239;
+    --warning-color: #ff9500;
+    --primary-danger-hover-color: #dd0327e8;
+
+    --primary-light-bg-color: #EDF1F7;
+    --primary-light-color: #DBE7F5;
+    --secondary-light-color: #9FB1C8;
+
+    --primary-text-color: #FFFFFF;
+    --primary-text-dark-color: #000000;
+    --primary-text-dark-900-color: #1f1f1f;
+    --primary-text-dark-700-color: #464646;
+    --primary-text-dark-500-color: #838383;
+    --primary-text-dark-300-color: #c3c3c3;
+    --primary-text-dark-100-color: #F2F2F2;
+
+    // Shadows
+    --shadow-50: 0 3px 6px rgba(0,0,0,0.06);
+    --shadow-100: 0 3px 6px rgba(0,0,0,0.16);
+    --shadow-300: 0 3px 16px rgba(0,0,0,0.16);
+    --shadow-500: 0 3px 26px rgba(0,0,0,0.16);
+
+    //Borders
+    --basic-border: 1px solid var(--primary-text-dark-color);
+    --basic-border-700: 1px solid var(--primary-text-dark-700-color);
+    --basic-border-500: 1px solid var(--primary-text-dark-500-color);
+    --basic-border-300: 1px solid var(--primary-text-dark-300-color);
+
+    // Gradients
+    --primary-gradient: linear-gradient(87deg, #0091DC 0, #53C3FC 100%);
+    --warning-gradient: linear-gradient(87deg, #dc3e00 0, #dc6300 100%);
+    --danger-gradient: linear-gradient(87deg, #dc0000 0, #dc3e00 100%);
+
+    --primary-gradient-xlight: linear-gradient(87deg, rgba(83, 196, 252, 0.05) 0, rgba(0, 147, 220, 0.1) 100%);
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+//Global Styles
+
+// Buttons
+.t-secondary{
+    background: var(--secondary-color);
+}
+
+.btn-wrapper{
+    padding: 10px;
+}
+
+body{
+    background: var(--primary-light-bg-color);
+}
+
+main{
+    width: calc(100% - 225px);
+    margin-left: 225px;
+    background: var(--primary-light-bg-color);
+}
+.main-container{
+    padding: 2em;
+    margin-bottom: 100px;;
+}
+
+.action-wrapper{
+    padding: 0 0 20px 0;
+}
+
+.actions{
+    border-top: 1px solid var(--primary-text-dark-100-color);
+    padding: 0;
+    text-align: center;
+}
+
+.label{
+    font-weight: 500;
+    color: var(--primary-color);
+    i{
+        padding-right: 5px;
+    }
+}
+.inner-text{
+    color: var(--primary-text-dark-700-color);
+}
+
+.input-wrapper{
+    input{
+        border: none;
+        outline: none;
+        padding: 2px;
+        width: 90%;
+    }
+}
+button{
+    &:disabled{
+        cursor: not-allowed;
+    }
+}
+
+.page-heading{
+    border-bottom: 1px solid var(--primary-text-dark-300-color);
+    padding: 0 0 1em;
+    p{
+        &:nth-child(1){
+            font-size: 1.2em;
+            font-weight: 500;
+            color: var(--primary-text-dark-700-color);
+            margin-bottom: 5px;
+        }
+        &:nth-child(2){
+            font-size: 0.9em;
+            color: var(--primary-text-dark-500-color);
+
+        }
+    }
+}
+.action-btn{
+    float: right;
+    background: var(--primary-color);
+    color: var(--primary-text-color);
+    opacity: 0.8;
+    &:hover{
+        background: var(--primary-color);
+        color: var(--primary-text-color);
+        opacity: 1;
+    }
+}
+.modal-img-wrapper{
+    text-align: center;
+    img{
+        width: 50%;
+        margin: auto;
+        padding: 3em;
+    }
+    p{
+        width: 100%;
+        text-align: center;
+    }
+}
+
+// The Complete Dashboard Styles
+
+// Micro Interactions
+.hover-shadow {
+    transition: all 0.2s ease-in;
+    &:hover{
+        box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+}
+
+// Paddings
+.p-0{
+    padding: 0;
+}
+.pl-0{
+    padding-left: 0px;
+}
+.pl-10{
+    padding-left: 10px;
+}
+.pl-20{
+    padding-left: 20px;
+}
+.pr-0{
+    padding-right: 0px;
+}
+.pr-10{
+    padding-right: 10px;
+}
+.pr-20{
+    padding-right: 20px;
+}
+.pt-10{
+    padding-top: 10px;
+}
+.pt-20{
+    padding-top: 20px;
+}
+.pb-10{
+    padding-bottom: 10px;
+}
+.pb-20{
+    padding-bottom: 20px;
+}
+.p-10{
+    padding: 10px;
+}
+.p-20{
+    padding: 20px;
+}
+
+// Margins
+.m-0{
+    margin: 0;
+}
+.ml-10{
+    margin-left: 10px;
+}
+.ml-20{
+    margin-left: 20px;
+}
+.mr-10{
+    margin-right: 10px;
+}
+.mr-20{
+    margin-right: 20px;
+}
+.mt-10{
+    margin-top: 10px;
+}
+.mt-20{
+    margin-top: 20px;
+}
+.mb-10{
+    margin-bottom: 10px;
+}
+.mb-20{
+    margin-bottom: 20px;
+}
+.m-10{
+    margin: 10px;
+}
+.m-20{
+    margin: 20px;
+}
+
+//Alignments
+.center-item-wrapper{
+    text-align: center;
+}
+
+// Buttons
+.t-primary{
+    background: var(--primary-color);
+    color: var(--primary-text-color);
+    border: none;
+    transition: all 0.1s ease-in;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    &:hover{
+        background: var(--primary-color);
+        color: var(--primary-text-color);
+        transform: translateY(-2px);
+    }
+}
+.t-warning{
+    background: var(--warning-gradient);
+    color: var(--primary-text-color);
+    border: none;
+    transition: all 0.1s ease-in;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    &:hover{
+        background: var(--warning-gradient);
+        color: var(--primary-text-color);
+        transform: translateY(-2px);
+    }
+}
+
+.t-danger{
+    background: var(--danger-gradient);
+    color: var(--primary-text-color);
+    border: none;
+    transition: all 0.1s ease-in;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    &:hover{
+        background: var(--danger-gradient);
+        color: var(--primary-text-color);
+        transform: translateY(-2px);
+    }
+}
+.t-transparent{
+    background: transaparent;
+    color: var(--primary-color);
+    border: none;
+    transition: all 0.1s ease-in;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    &:hover{
+        background: transparent;
+        color: var(--primary-color);
+        transform: translateY(-2px);
+    }
+}
+
+.fab-btn-wrapper{
+    width: 100%;
+    position: fixed;
+    bottom: 70px;
+    right: 70px;
+    text-align: right;
+    z-index: 10;
+    .fab-btn{
+        border-radius: 30px;
+        background: var(--primary-gradient);
+        color: var(--primary-text-color);
+        border: none;
+        transition: all 0.1s ease-in;
+        padding: 10px 20px;
+        &:hover{
+            background: var(--primary-gradient);
+            color: var(--primary-text-color);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+// Elements and Components
+
+a{
+    color: var(--primary-color) !important;
+}
+
+// Breadcrumbs and Page Title
+.breacrumbs-wrapper{
+    padding: 20px;
+    .page-title{
+        font-size: 1.1em;
+        font-weight: 500;
+    }
+}
+
+//Search Bar
+.page-header-wrapper{
+    padding: 1em 1em 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    .search-wrapper{
+        float: right;
+        box-shadow: var(--shadow-300);
+        background: #FFFFFF;
+        padding: 10px 20px;
+        margin-bottom: 1em;
+        border-radius: 30px;
+    }
+}
+
+.search-icon{
+    i{
+        padding-right: 10px;
+        color: var(--primary-color);
+    }
+}
+
+// Card 
+.card-wrapper{
+    padding: 1em;
+}
+.card{
+    box-shadow: 0 0 2rem 0 rgba(136,152,170,.15);
+    padding: 1em;
+    border-radius: 8px;
+    border: 0;
+}
+
+// Toasts
+ngb-toast{
+    position: fixed;
+    top: 30px;
+    right: 20px;
+}
+
+// Tables
+.t-table{
+    thead{
+        background: #ccc;
+    }
+}
+
+//Scrollbars
+// ::-webkit-scrollbar {
+//     &:horizontal{
+//         width: 6px;
+//     }
+// }
+// ::-webkit-scrollbar {
+//     width: 12px;
+// }
+ 
+// ::-webkit-scrollbar-track {
+//     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+//     border-radius: 10px;
+// }
+ 
+// ::-webkit-scrollbar-thumb {
+//     border-radius: 10px;
+//     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+// }
