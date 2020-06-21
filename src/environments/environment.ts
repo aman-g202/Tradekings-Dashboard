@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  base_url: 'http://41.218.83.178:3002/',
+  endPoints: {
+    login: 'api/user/authenticate',
+    capturedData: 'api/order/captured/data'
+  }
 };
 
 /*

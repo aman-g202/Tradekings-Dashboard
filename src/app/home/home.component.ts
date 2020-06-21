@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 
 import data from '../../assets/captured-data';
+import { AppService } from '../../providers/app.service';
 
 
 @Component({
@@ -12,20 +13,39 @@ import data from '../../assets/captured-data';
 export class HomeComponent implements OnInit {
 
   data = [];
+  fetchedCapturedData: Array<any>;
+  isFetchedData = false;
 
-  constructor() { }
+  constructor(
+    private appService: AppService
+  ) { }
 
   ngOnInit() {
-    this.prepareData();
+    this.fetchCapturedData();
+  }
+
+  fetchCapturedData() {
+    this.appService.fetchCapturedData().subscribe((result: Array<any>) => {
+      if (result.length > 0) {
+        this.fetchedCapturedData = result;
+        this.prepareData();
+      } else {
+        this.isFetchedData = true;
+        alert('No captured data found on server!');
+      }
+    }, error => {
+      this.isFetchedData = true;
+      console.error('Error on feching captured data--', error);
+    });
   }
 
   prepareData() {
-    data.forEach(item => {
+    this.fetchedCapturedData.forEach(item => {
       item.unitSizeDetails.forEach(unitSize => {
         unitSize.products.forEach(product => {
           /* Pushed Tk Product Row */
           this.data.push({
-            'Employee Name': item.capturedBy.name,
+            'Employee Name': item.capturedBy ? item.capturedBy.name : 'Not Found',
             Province: item.customerDetail.province,
             'Town/City': item.customerDetail.city,
             'Compound/Area': item.customerDetail.area,
@@ -35,7 +55,7 @@ export class HomeComponent implements OnInit {
             Category: item.parentCategory,
             'Sub Catagory': item.childCategoryName,
             'Brand Type': 'TK',
-            Brand: product.brand,
+            Brand: product.brand ? product.brand : product.BRAND,
             'Product Name': product.productName,
             'Unit Type': 'Case',
             'Unit Size': unitSize.unitSize,
@@ -47,7 +67,7 @@ export class HomeComponent implements OnInit {
           product.competitiveProduct.forEach(compProduct => {
             /* Pushed Comp Product Row */
             this.data.push({
-              'Employee Name': item.capturedBy.name,
+              'Employee Name': item.capturedBy ? item.capturedBy.name : 'Not Found',
               Province: item.customerDetail.province,
               'Town/City': item.customerDetail.city,
               'Compound/Area': item.customerDetail.area,
@@ -57,7 +77,7 @@ export class HomeComponent implements OnInit {
               Category: item.parentCategory,
               'Sub Catagory': item.childCategoryName,
               'Brand Type': 'Comp',
-              Brand: compProduct.brand,
+              Brand: compProduct.brand ? compProduct.brand : compProduct.BRAND,
               'Product Name': compProduct.productName,
               'Unit Type': 'Case',
               'Unit Size': unitSize.unitSize,
@@ -70,9 +90,14 @@ export class HomeComponent implements OnInit {
         });
       });
     });
+    this.isFetchedData = true;
   }
 
   onDownloadSheet() {
+    if (data.length === 0) {
+      alert('No captured data found on server!');
+      return;
+    }
     /* generate worksheet */
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.data);
     // const range = XLSX.utils.decode_range(ws['!ref']);
