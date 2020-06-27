@@ -39,7 +39,7 @@ export class AppService {
     fetchCapturedData() {
         return this.httpClient
             .get<any>(
-                environment.base_url + environment.endPoints.capturedData,
+                `${environment.base_url}${environment.endPoints.capturedData}?fromDate=10/06/2020&throughDate=27/06/2020&reportType=stocking&externalId=E0020`,
                 {
                     observe: 'response',
                     responseType: 'json'
