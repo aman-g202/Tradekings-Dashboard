@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 
 import data from '../../assets/captured-data';
 import { AppService } from '../../providers/app.service';
+import { NgbCalendar, NgbDateParserFormatter, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -16,13 +17,57 @@ export class HomeComponent implements OnInit {
   fetchedCapturedData: Array<any>;
   isFetchedData = false;
 
+  hoveredDate: NgbDate | null = null;
+
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
+
+
   constructor(
-    private appService: AppService
-  ) { }
+    private appService: AppService,
+    private calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter
+  ) {
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+  }
 
   ngOnInit() {
     this.fetchCapturedData();
   }
+
+
+  // Date Selection Begins
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+    console.log('From date:' + JSON.stringify(this.fromDate));
+    console.log('End date:' + JSON.stringify(this.toDate));
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  }
+
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+  // Date Selection Ends
 
   fetchCapturedData() {
     this.appService.fetchCapturedData().subscribe((result: Array<any>) => {
