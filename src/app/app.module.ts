@@ -10,12 +10,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { TokenInterceptor } from '../providers/interceptor.service';
+import { FullscreenLoaderComponent } from './shared/fullscreen-loader/fullscreen-loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    FullscreenLoaderComponent
   ],
   imports: [
     BrowserModule,
