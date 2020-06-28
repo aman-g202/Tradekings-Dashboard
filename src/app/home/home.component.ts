@@ -27,13 +27,14 @@ export class HomeComponent implements OnInit {
   reportType = 'all';
   executives = [];
   externalId = 'all';
+  loading = true;
   constructor(
     private appService: AppService,
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter
   ) {
-    this.fromDate = calendar.getToday();
-    this.toDate = calendar.getPrev(calendar.getToday(), 'd', 10);
+    this.toDate = calendar.getToday();
+    this.fromDate = calendar.getPrev(calendar.getToday(), 'd', 10);
     console.log(JSON.stringify(this.toDate));
 
     this.fd = `${this.fromDate.day}/${this.fromDate.month}/${this.fromDate.year}`;
@@ -49,6 +50,7 @@ export class HomeComponent implements OnInit {
   async getExecutiveList() {
     this.appService.listAllExecutives().subscribe((res: any) => {
       this.executives = res.body;
+      this.loading = false;
     });
   }
 
