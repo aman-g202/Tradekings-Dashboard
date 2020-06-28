@@ -28,6 +28,9 @@ export class HomeComponent implements OnInit {
   executives = [];
   externalId = 'all';
   loading = true;
+  isAuthorized: any = false;
+
+
   constructor(
     private appService: AppService,
     private calendar: NgbCalendar,
@@ -44,6 +47,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    const temp = localStorage.getItem('isAuthorized');
+    if (temp !== 'undefined') {
+      this.isAuthorized = localStorage.getItem('isAuthorized');
+    }
+
     this.getExecutiveList();
   }
 

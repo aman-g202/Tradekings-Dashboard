@@ -23,6 +23,7 @@ export class AppService {
                 tap(result => {
                     if (result.status === 200) {
                         localStorage.setItem('tradekings_token', result.body.body[0].token);
+                        localStorage.setItem('isAuthorized', result.body.body[0].isAuthorized);
                     } else {
                         throw new Error('Oops, Unknown error occured!');
                     }
