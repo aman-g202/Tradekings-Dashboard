@@ -5,9 +5,6 @@
             <p>TradeKings Report Dashboard</p>
             <p *ngIf="!isFetchedData">Fetching data...</p>
         </div>
-        <div>
-            <button class="btn-login" (click)="getReport()">Get Report</button>
-        </div>
         <div class="filters col-lg-12">
             <div class="col-lg-8 pr-0 float-left">
                 <form class="form-inline">
@@ -97,8 +94,16 @@
         <div class="col-lg-12 input-wrapper clearfix">
             <img src="../../assets/icons/xlsx.svg" alt="">
         </div>
-          <div class="col-lg-12 input-wrapper center-item-wrapper clearfix">
-              <button class="btn login-btn hover-shadow" [disabled]="!isFetchedData"(click)="onDownloadSheet()">Download Sheet</button>
-          </div>
+
+          <!-- <div class="row input-wrapper center-item-wrapper clearfix"> -->
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <button class="btn login-btn hover-shadow" (click)="getReport()">Generate Sheet</button>
+                </div>  
+                <div class="col-lg-6 col-md-6">
+                    <button class="btn login-btn hover-shadow" [disabled]="!isFetchedData"(click)="onDownloadSheet()">Download Sheet</button>
+                </div> 
+            </div>
+          <!-- </div> -->
       </div>
 </section>
