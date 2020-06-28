@@ -19,20 +19,45 @@ export class HomeComponent implements OnInit {
 
   hoveredDate: NgbDate | null = null;
 
-  fromDate: NgbDate | null;
+  fromDate: NgbDate | null ;
   toDate: NgbDate | null;
 
-
+  fd: any;
+  td: any;
+  reportType = 'all';
+  executives = [];
+  externalId = 'all';
   constructor(
     private appService: AppService,
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter
   ) {
     this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+    this.toDate = calendar.getPrev(calendar.getToday(), 'd', 10);
+    console.log(JSON.stringify(this.toDate));
+
+    this.fd = `${this.fromDate.day}/${this.fromDate.month}/${this.fromDate.year}`;
+    // tslint:disable-next-line: max-line-length
+    this.td = `${this.toDate.day}/${this.toDate.month}/${this.toDate.year}`;
+    console.log('============', this.td);
   }
 
   ngOnInit() {
+    this.getExecutiveList();
+    // this.fetchCapturedData();
+  }
+
+  async getExecutiveList() {
+    this.appService.listAllExecutives().subscribe((res: any) => {
+      this.executives = res.body;
+    });
+  }
+
+  getExecutive(externalId) {
+    this.externalId = externalId;
+  }
+
+  getReport() {
     this.fetchCapturedData();
   }
 
@@ -47,8 +72,12 @@ export class HomeComponent implements OnInit {
       this.toDate = null;
       this.fromDate = date;
     }
-    console.log('From date:' + JSON.stringify(this.fromDate));
-    console.log('End date:' + JSON.stringify(this.toDate));
+    this.fd = `${this.fromDate.day}/${this.fromDate.month}/${this.fromDate.year}`;
+    if (this.toDate) {
+      // tslint:disable-next-line: max-line-length
+      this.td = `${this.toDate.day ? this.toDate.day : ''}/${this.toDate.month ? this.toDate.month : ''}/${this.toDate.year ? this.toDate.year : ''}`;
+    }
+    console.log('===========td ========', this.td);
   }
 
   isHovered(date: NgbDate) {
@@ -70,7 +99,9 @@ export class HomeComponent implements OnInit {
   // Date Selection Ends
 
   fetchCapturedData() {
-    this.appService.fetchCapturedData().subscribe((result: Array<any>) => {
+    this.appService
+    .fetchCapturedData(this.fd, this.td, this.reportType, this.externalId)
+    .subscribe((result: Array<any>) => {
       if (result.length > 0) {
         this.fetchedCapturedData = result;
         this.prepareData();

@@ -36,10 +36,16 @@ export class AppService {
             );
     }
 
-    fetchCapturedData() {
+    listAllExecutives() {
+        return this.httpClient.get(`${environment.base_url}${environment.endPoints.executive}`);
+    }
+
+    fetchCapturedData(from, through, reportType, externalId) {
+        const extId = externalId !== 'all' ? `&externalId=${externalId}` : '';
+        const rType = reportType === 'all' ? '' : `&reportType=${reportType}`;
         return this.httpClient
             .get<any>(
-                `${environment.base_url}${environment.endPoints.capturedData}?fromDate=10/06/2020&throughDate=27/06/2020&reportType=stocking&externalId=E0020`,
+                `${environment.base_url}${environment.endPoints.capturedData}?fromDate=${from}&throughDate=${through}${rType}${extId}`,
                 {
                     observe: 'response',
                     responseType: 'json'
@@ -57,3 +63,27 @@ export class AppService {
             );
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
