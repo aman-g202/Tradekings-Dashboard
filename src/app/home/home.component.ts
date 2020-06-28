@@ -44,7 +44,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getExecutiveList();
-    // this.fetchCapturedData();
   }
 
   async getExecutiveList() {
@@ -55,10 +54,6 @@ export class HomeComponent implements OnInit {
 
   getExecutive(externalId) {
     this.externalId = externalId;
-  }
-
-  getReport() {
-    this.fetchCapturedData();
   }
 
 
@@ -99,18 +94,20 @@ export class HomeComponent implements OnInit {
   // Date Selection Ends
 
   fetchCapturedData() {
+    this.isFetchedData = true;
     this.appService
     .fetchCapturedData(this.fd, this.td, this.reportType, this.externalId)
     .subscribe((result: Array<any>) => {
       if (result.length > 0) {
         this.fetchedCapturedData = result;
+        this.isFetchedData = false;
         this.prepareData();
       } else {
-        this.isFetchedData = true;
+        this.isFetchedData = false;
         alert('No captured data found on server!');
       }
     }, error => {
-      this.isFetchedData = true;
+      this.isFetchedData = false;
       console.error('Error on feching captured data--', error);
     });
   }
@@ -167,32 +164,20 @@ export class HomeComponent implements OnInit {
       });
     });
     this.isFetchedData = true;
+    this.generateSheet();
   }
 
   onDownloadSheet() {
-    if (data.length === 0) {
+    this.fetchCapturedData();
+  }
+
+  generateSheet() {
+    if (this.data.length === 0) {
       alert('No captured data found on server!');
       return;
     }
     /* generate worksheet */
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.data);
-    // const range = XLSX.utils.decode_range(ws['!ref']);
-
-    // tslint:disable-next-line: prefer-for-of
-    // let cell: any;
-    // let address: string;
-    // for (let i = 0; i < range.e.c; i++) {
-    //   address = XLSX.utils.encode_cell({ c: i, r: 0 });
-    //   cell = ws[address];
-    // -----For Styling----
-    //   cell.s = {
-    //     patternType: 'solid',
-    //     fgColor: { theme: 7, tint: 0.7999816888943144, rgb: 'FFF2CC' },
-    //     bgColor: { indexed: 64 }
-    //   };
-    //   ws[address] = cell;
-    // }
-
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
