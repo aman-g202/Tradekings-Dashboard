@@ -18,11 +18,9 @@
     }
     .form-wrapper{
         box-shadow: var(--shadow-300);
-        // background: var(--light-bg);
         padding: 3em 2em;
         position: absolute;
         top: 0;
-        // height: 50vh;
         margin-top: 10vh;
         border-radius: 10px;
 
@@ -94,3 +92,40 @@
           width: 100%;
       }
   }
+
+  .c-transparent{
+    border: none;
+    background: transparent;
+  }
+  label{
+      margin-bottom: 0;
+  }
+
+  .mobile-message{
+      display: none;
+      text-align: center;
+      margin-top: 50%;
+      img{
+          width: 120px;
+          margin-bottom: 40px;
+      }
+  }
+
+  @media only screen and (max-width: 800px) {
+    .form-wrapper{
+        box-shadow: none !important;
+        padding: 0 !important;
+        .login-btn{
+            width: 80% !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .mobile-message{
+        display: inline-block !important;
+    }
+    .form-wrapper{
+        display: none !important;
+    }
+}
