@@ -29,6 +29,10 @@ export class HomeComponent implements OnInit {
   externalId = 'all';
   loading = true;
   isAuthorized: any = false;
+  date: any;
+  year: number;
+  month: number;
+  dt: number;
 
 
   constructor(
@@ -124,6 +128,18 @@ export class HomeComponent implements OnInit {
 
   prepareData() {
     this.fetchedCapturedData.forEach(item => {
+      this.date = new Date(item.date);
+      this.year = this.date.getFullYear();
+      this.month = this.date.getMonth() + 1;
+      this.dt = this.date.getDate();
+
+      if (this.dt < 10) {
+        this.dt = +('0' + this.dt);
+      }
+      if (this.month < 10) {
+        this.month = +('0' + this.month);
+      }
+      item.date = `${this.dt}/${this.month}/${this.year}`;
       item.unitSizeDetails.forEach(unitSize => {
         unitSize.products.forEach(product => {
           /* Pushed Tk Product Row */
