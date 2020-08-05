@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   data = [];
   fetchedCapturedData: Array<any>;
-  isFetchedData = false;
+  isFetchedData = true;
 
   hoveredDate: NgbDate | null = null;
 
@@ -42,12 +42,14 @@ export class HomeComponent implements OnInit {
   ) {
     this.toDate = calendar.getToday();
     this.fromDate = calendar.getPrev(calendar.getToday(), 'd', 10);
-    console.log(JSON.stringify(this.toDate));
-
-    this.fd = `${this.fromDate.day}/${this.fromDate.month}/${this.fromDate.year}`;
+    const fromDay = `${this.fromDate.day < 10 ? `0${this.fromDate.day}` : this.fromDate.day}`;
+    const fromMonth = `${this.fromDate.month < 10 ? `0${this.fromDate.month}` : this.fromDate.month}`;
     // tslint:disable-next-line: max-line-length
-    this.td = `${this.toDate.day}/${this.toDate.month}/${this.toDate.year}`;
-    console.log('============', this.td);
+    const toDay = `${this.toDate.day < 10 ? `0${this.toDate.day}` : this.toDate.day}`;
+    const toMonth = `${this.toDate.month < 10 ? `0${this.toDate.month}` : this.toDate.month}`;
+
+    this.fd = `${fromDay}/${fromMonth}/${this.fromDate.year}`;
+    this.td = `${toDay}/${toMonth}/${this.toDate.year}`;
   }
 
   ngOnInit() {
@@ -63,6 +65,7 @@ export class HomeComponent implements OnInit {
     this.appService.listAllExecutives().subscribe((res: any) => {
       this.executives = res.body;
       this.loading = false;
+      this.isFetchedData = false;
     });
   }
 
@@ -81,12 +84,16 @@ export class HomeComponent implements OnInit {
       this.toDate = null;
       this.fromDate = date;
     }
-    this.fd = `${this.fromDate.day}/${this.fromDate.month}/${this.fromDate.year}`;
+    const fromDay = `${this.fromDate.day < 10 ? `0${this.fromDate.day}` : this.fromDate.day}`;
+    const fromMonth = `${this.fromDate.month < 10 ? `0${this.fromDate.month}` : this.fromDate.month}`;
+
+    this.fd = `${fromDay}/${fromMonth}/${this.fromDate.year}`;
     if (this.toDate) {
+      const toDay = `${this.toDate.day < 10 ? `0${this.toDate.day}` : this.toDate.day}`;
+      const toMonth = `${this.toDate.month < 10 ? `0${this.toDate.month}` : this.toDate.month}`;
       // tslint:disable-next-line: max-line-length
-      this.td = `${this.toDate.day ? this.toDate.day : ''}/${this.toDate.month ? this.toDate.month : ''}/${this.toDate.year ? this.toDate.year : ''}`;
+      this.td = `${toDay ? toDay : ''}/${toMonth ? toMonth : ''}/${this.toDate.year ? this.toDate.year : ''}`;
     }
-    console.log('===========td ========', this.td);
   }
 
   isHovered(date: NgbDate) {
@@ -144,11 +151,14 @@ export class HomeComponent implements OnInit {
         unitSize.products.forEach(product => {
           /* Pushed Tk Product Row */
           this.data.push({
-            'Employee Name': item.capturedBy ? item.capturedBy.name : 'Mayank Shah',
+            'Employee Name': item.capturedBy ? item.capturedBy.name : 'Anwar Quazi',
             Province: item.customerDetail.province,
             'Town/City': item.customerDetail.city,
             'Compound/Area': item.customerDetail.area,
             'Shop Name': item.customerDetail.shopName,
+            // tslint:disable-next-line: max-line-length
+            'Report Type': item.reportType ? item.reportType === 'price_capturing' ? 'Price Capturing' : item.reportType : 'Price Capturing',
+            Channel: item.channel ? item.channel : 'NA',
             'TK Product Code': product.productCode,
             'TK Product Name': product.masterName,
             Category: item.parentCategory,
@@ -163,14 +173,18 @@ export class HomeComponent implements OnInit {
             RRP: +product.RRP,
             'Monthly Sales In Qty': +product.MSQ
           });
+          if (product.competitiveProduct) {
           product.competitiveProduct.forEach(compProduct => {
             /* Pushed Comp Product Row */
             this.data.push({
-              'Employee Name': item.capturedBy ? item.capturedBy.name : 'Not Found',
+              'Employee Name': item.capturedBy ? item.capturedBy.name : 'Anwar Quazi',
               Province: item.customerDetail.province,
               'Town/City': item.customerDetail.city,
               'Compound/Area': item.customerDetail.area,
               'Shop Name': item.customerDetail.shopName,
+              // tslint:disable-next-line: max-line-length
+              'Report Type': item.reportType ? item.reportType === 'price_capturing' ? 'Price Capturing' : item.reportType : 'Price Capturing',
+              Channel: item.channel ? item.channel : 'NA',
               'TK Product Code': compProduct.productCode,
               'TK Product Name': product.productName,
               Category: item.parentCategory,
@@ -186,10 +200,10 @@ export class HomeComponent implements OnInit {
               'Monthly Sales In Qty': +compProduct.MSQ
             });
           });
+        }
         });
       });
     });
-    this.isFetchedData = true;
     this.generateSheet();
   }
 

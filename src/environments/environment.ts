@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  base_url: 'http://41.218.83.178:3002/',
+  base_url: 'http://41.218.83.178:3000/',
   endPoints: {
     login: 'api/user/authenticate',
     capturedData: 'api/order/captured/data',
